@@ -1,3 +1,4 @@
+// https://leetcode.com/problems/interval-list-intersections/
 class Solution {
     public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
         List<int[]> ans = new ArrayList();
