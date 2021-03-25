@@ -1,0 +1,48 @@
+// https://leetcode.com/problems/number-of-ways-where-square-of-number-is-equal-to-product-of-two-numbers/submissions/
+
+class Solution {
+    public int numTriplets(int[] nums1, int[] nums2) {
+        int count = 0;
+        
+        Map<Long, Integer> hm1 = new HashMap<>();
+        Map<Long, Integer> hm2 = new HashMap<>();
+        
+        for (int i = 0; i < nums1.length; i++) {
+            long key1 = (long)nums1[i] * nums1[i];
+            if (!hm1.containsKey(key1)) {
+                hm1.put(key1, 1);
+            } else {
+                hm1.put(key1, hm1.get(key1) + 1);
+            }
+        }
+                
+        for (int i = 0; i < nums2.length; i++) {
+            long key2 = (long)nums2[i] * nums2[i];
+            if (!hm2.containsKey(key2)) {
+                hm2.put(key2, 1);
+            } else {
+                hm2.put(key2, hm2.get(key2) + 1);
+            }
+        }
+        
+        for (int i = 0; i < nums2.length - 1; i++) {
+            for (int j = i + 1; j < nums2.length; j++) {
+                long p = (long)nums2[i] * nums2[j];
+                if (hm1.containsKey(p)) {
+                    count += hm1.get(p);
+                }
+            }
+        }
+                
+        for (int i = 0; i < nums1.length - 1; i++) {
+            for (int j = i + 1; j < nums1.length; j++) {
+                long p = (long)nums1[i] * nums1[j];
+                if (hm2.containsKey(p)) {
+                    count += hm2.get(p);
+                }
+            }
+        }
+        
+        return count;
+    }
+}
