@@ -1,24 +1,54 @@
 // https://leetcode.com/problems/remove-interval/
 
 class Solution {
-    public List<List<Integer>> removeInterval(int[][] intervals, int[] toBeRemoved) {
-        List<List<Integer>> output = new ArrayList<>();
+    public int balancedString(String s) {
+        if (s.length() % 4 != 0) System.out.println("Invalid String Length.");
         
-        int newStart = toBeRemoved[0];
-        int newEnd = toBeRemoved[1];
+        Map<Character, Integer> hm = new HashMap<>();
         
-        for (int[] interval : intervals) {
-            int start = interval[0];
-            int end = interval[1];
-            
-            if (end <= newStart || start >= newEnd) {
-                output.add(Arrays.asList(start, end));
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!hm.containsKey(c)) {
+                hm.put(c, 1);
             } else {
-                if (start < newStart) output.add(Arrays.asList(start, newStart));
-                
-                if (end >newEnd) output.add(Arrays.asList(newEnd, end));
+                hm.put(c, hm.get(c) + 1);
             }
         }
-        return output;
+        
+        // Balanced number of characters.
+        int b = s.length() / 4;
+        
+        int min = 0;
+        
+        List<Character> over = new ArrayList<>();
+        
+        for (char c : hm.keySet()) {
+            int delta = hm.get(c) - b;
+            if (hm.get(c) - b > 0) {
+                min += delta;
+                over.add(c);
+            }
+        }
+        
+        int temp = 0, max = 0, index = 0;
+        
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (over.contains(c)) {
+                temp++;
+            } else {
+                temp--;
+                if (temp < 0) temp = 0;
+            }
+    
+            if (temp == min) return min;
+            
+            if (temp > max) {
+                max = temp;
+                index = i;
+            }
+        }
+        
+        
     }
 }
