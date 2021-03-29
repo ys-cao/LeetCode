@@ -1,6 +1,7 @@
 
 
 /*
+/*
 // Definition for a Node.
 class Node {
     public int val;
@@ -11,6 +12,7 @@ class Node {
 */
 
 class Solution {
+    
     public Node lowestCommonAncestor(Node p, Node q) {
         
         List<Node> parentsP = new ArrayList<>();
@@ -22,17 +24,13 @@ class Solution {
             p = p.parent;
         }
         
-        if (parentsP.contains(q)) {
+    
+        while (q != null) {
+            if (parentsP.contains(q)) {
                 return q;
-            }
-        
-        while (q.parent != null) {
-            
-            if (parentsP.contains(q.parent)) {
-                return q.parent;
-            }
-            
+            } 
             q = q.parent;
+            
         }
         
         return null;
