@@ -9,45 +9,23 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode[] nodes) {
-        // Parents for nodes[0].
-        Map<TreeNode, TreeNode> parents0 = new HashMap<>();
+        Set<Integer> set = new HashSet<>();
         
-        // Use to traverse the binary tree.
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        
-        parents0.put(root, null);
-        stack.push(root);
-            
-        while  (!parents0.containsKey(nodes[0])) {
-            TreeNode node = stack.pop();
-            
-            if (node.left != null) {
-                parents0.put(node.left, node);
-                stack.push(node.left);
-            } 
-            
-            if (node.right != null) {
-                parents0.put(node.right, node);
-                stack.push(node.right);
-            }
-            
+        for (TreeNode node : nodes) {
+            set.add(node.val);
         }
         
-        // HashSet for nodes[0].
-        Set<TreeNode> ancestors0 = new HashSet<>();
+        return findLCA(root, set);
+    }
+    
+    private TreeNode findLCA(TreeNode node, Set<Integer> set) {
+        if (node == null || set.contains(node.val)) return node;
         
-        TreeNode n0 = nodes[0];
+        TreeNode left = findLCA(node.left, set);
+        TreeNode right = findLCA(node.right, set);
         
-        while (n0 != null) {
-            ancestors0.add(n0);
-            n0 = parents0.get(n0);
-        }
-        
-        TreeNode tempLCA = n0;
-        
-        for (TreeNode currNode : nodes) {
-            
-        }
-        
+        if (left == null) return right;
+        if (right == null) return left;
+        return node;
     }
 }
