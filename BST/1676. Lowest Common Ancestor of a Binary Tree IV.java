@@ -17,22 +17,37 @@ class Solution {
         
         parents0.put(root, null);
         stack.push(root);
-        
-        TreeNode node;
             
         while  (!parents0.containsKey(nodes[0])) {
-            node = stack.pop();
+            TreeNode node = stack.pop();
             
             if (node.left != null) {
                 parents0.put(node.left, node);
                 stack.push(node.left);
-            } else if (node.right != null) {
+            } 
+            
+            if (node.right != null) {
                 parents0.put(node.right, node);
                 stack.push(node.right);
             }
             
         }
         
+        // HashSet for nodes[0].
+        Set<TreeNode> ancestors0 = new HashSet<>();
+        
+        TreeNode n0 = nodes[0];
+        
+        while (n0 != null) {
+            ancestors0.add(n0);
+            n0 = parents0.get(n0);
+        }
+        
+        TreeNode tempLCA = n0;
+        
+        for (TreeNode currNode : nodes) {
+            
+        }
         
     }
 }
